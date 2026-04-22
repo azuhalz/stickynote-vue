@@ -8,7 +8,37 @@
         <button class="header-button">+</button>
       </header>
 
-      <div>card</div>
+      <div class="card-container">
+        <div class="card">
+          <p class="card-content">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores
+            alias, blanditiis deserunt sapiente consequuntur dignissimos aperiam
+            fugit, quos maxime aliquam modi explicabo velit placeat tempora
+            tenetur.
+          </p>
+          <p class="card-date">12/12/2026</p>
+        </div>
+
+        <div class="card">
+          <p class="card-content">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores
+            alias, blanditiis deserunt sapiente consequuntur dignissimos aperiam
+            fugit, quos maxime aliquam modi explicabo velit placeat tempora
+            tenetur.
+          </p>
+          <p class="card-date">12/12/2026</p>
+        </div>
+
+        <div class="card">
+          <p class="card-content">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores
+            alias, blanditiis deserunt sapiente consequuntur dignissimos aperiam
+            fugit, quos maxime aliquam modi explicabo velit placeat tempora
+            tenetur.
+          </p>
+          <p class="card-date">12/12/2026</p>
+        </div>
+      </div>
     </div>
   </main>
 </template>
@@ -47,5 +77,23 @@ header {
   font-size: 24px;
   border: none;
   cursor: pointer;
+}
+
+.card {
+  width: 225px;
+  height: 225px;
+  background-color: #495a7d;
+  padding: 10px;
+  background-color: pink;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 </style>
