@@ -2,6 +2,29 @@
 import { ref } from "vue";
 
 const showForm = ref(false);
+const newMemo = ref("");
+const memos = ref([]);
+const errorMessage = ref("");
+
+function addMemo() {
+  if (!newMemo.value) {
+    return (errorMessage.value = "Please enter a memo.");
+  }
+
+  memos.value.push({
+    id: Date.now(),
+    memo: newMemo.value,
+    date: new Date().toLocaleDateString(),
+    backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+  });
+
+  newMemo.value = "";
+  showForm.value = false;
+}
+
+function deleteMemo(id) {
+  memos.value = memos.value.filter((memo) => memo.id !== id);
+}
 </script>
 
 <template>
@@ -13,34 +36,19 @@ const showForm = ref(false);
       </header>
 
       <div class="card-container">
-        <div class="card">
+        <div
+          v-for="(memo, index) in memos"
+          class="card"
+          :key="index"
+          :style="{ backgroundColor: memo.backgroundColor }"
+        >
           <p class="card-content">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-            alias, blanditiis deserunt sapiente consequuntur dignissimos aperiam
-            fugit, quos maxime aliquam modi explicabo velit placeat tempora
-            tenetur.
+            {{ memo.memo }}
           </p>
-          <p class="card-date">12/12/2026</p>
-        </div>
-
-        <div class="card">
-          <p class="card-content">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-            alias, blanditiis deserunt sapiente consequuntur dignissimos aperiam
-            fugit, quos maxime aliquam modi explicabo velit placeat tempora
-            tenetur.
-          </p>
-          <p class="card-date">12/12/2026</p>
-        </div>
-
-        <div class="card">
-          <p class="card-content">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores
-            alias, blanditiis deserunt sapiente consequuntur dignissimos aperiam
-            fugit, quos maxime aliquam modi explicabo velit placeat tempora
-            tenetur.
-          </p>
-          <p class="card-date">12/12/2026</p>
+          <div class="card-footer">
+            <p class="card-date">{{ memo.date }}</p>
+            <button @click="deleteMemo(memo.id)" class="card-button">x</button>
+          </div>
         </div>
       </div>
     </div>
@@ -48,8 +56,15 @@ const showForm = ref(false);
     <div v-if="showForm" class="form-overlay">
       <div class="form-modal">
         <button class="form-close-btn">x</button>
-        <textarea name="memo" id="memo" cols="30" rows="10"></textarea>
-        <button class="form-save-btn">Save</button>
+        <p v-if="errorMessage" class="form-error">{{ errorMessage }}</p>
+        <textarea
+          v-model="newMemo"
+          name="memo"
+          id="memo"
+          cols="30"
+          rows="10"
+        ></textarea>
+        <button class="form-save-btn" @click="addMemo">Save</button>
       </div>
     </div>
   </main>
@@ -154,5 +169,15 @@ header {
   border: none;
   font-size: 25px;
   cursor: pointer;
+}
+
+.form-error {
+  color: red;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>
